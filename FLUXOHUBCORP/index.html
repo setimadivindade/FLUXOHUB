@@ -3,371 +3,719 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FLUXOHUB — Materiais de Hot</title>
+<title>FLUXOHUB · Materiais de Hot</title>
 <meta name="description" content="FLUXOHUB — Materiais práticos, estratégias e direcionamentos para quem quer começar no mercado digital.">
+<meta name="theme-color" content="#0a0707">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060102;
-  --red:#ff2a2a;
-  --red-2:#e00b0b;
-  --red-3:#8f0000;
-  --ink:#f6f2f2;
-  --muted:#b8a5a6;
-  --soft:#d9c9ca;
-  --line:rgba(255,60,60,.18);
-  --glass:rgba(255,255,255,.035);
+  --bg:#0a0707;
+  --bg-2:#110b0b;
+  --card:#0f0a0a;
+  --red:#ff2b2b;
+  --red-soft:rgba(255,43,43,.14);
+  --ink:#ffffff;
+  --mute:rgba(255,255,255,.56);
+  --dim:rgba(255,255,255,.34);
+  --line:rgba(255,70,70,.13);
+  --line-2:rgba(255,255,255,.08);
+  --plus:rgba(255,120,120,.55);
+  --max:1180px;
+  --gut:16px;
+  --edge:max(var(--gut), calc(50% - var(--max) / 2));
+  --serif:"Instrument Serif",Georgia,serif;
+  --sans:Switzer,ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.3;letter-spacing:-.02em;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+::selection{background:var(--red);color:#fff}
 
-/* ---------- fundo ---------- */
-.bg-fx{position:fixed;inset:0;z-index:-3;pointer-events:none;
-  background:
-    radial-gradient(55% 40% at 50% 0%, rgba(255,25,25,.30), transparent 70%),
-    radial-gradient(35% 35% at 0% 60%, rgba(160,0,0,.22), transparent 70%),
-    radial-gradient(40% 35% at 100% 75%, rgba(190,0,0,.20), transparent 70%),
-    linear-gradient(180deg,#110204 0%, #060102 50%, #090102 100%)}
-.bg-fx::after{content:"";position:absolute;inset:0;opacity:.35;
-  background-image:linear-gradient(rgba(255,60,60,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,60,60,.05) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(70% 60% at 50% 30%,#000 30%,transparent 80%)}
+/* trilhos verticais da página */
+.rails{position:fixed;inset:0;pointer-events:none;z-index:0}
 
-/* cédulas flutuando */
-#money{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
-.note{position:absolute;top:-200px;will-change:transform;
-  animation:fall linear infinite;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
-.note svg{display:block;width:100%;height:auto;animation:sway ease-in-out infinite alternate;animation-duration:inherit}
-@keyframes fall{
-  from{transform:translate3d(0,-20vh,0) rotate(var(--r0))}
-  to{transform:translate3d(var(--dx),130vh,0) rotate(var(--r1))}}
-@keyframes sway{
-  0%{transform:rotateX(0deg) rotateY(-25deg)}
-  100%{transform:rotateX(35deg) rotateY(25deg)}}
-.vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 40%,transparent 40%,rgba(6,1,2,.85) 100%)}
+/* cédulas de R$100 caindo ao fundo */
+#money{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:900px}
+.bill{position:absolute;top:0;will-change:transform;animation:fall linear infinite}
+.bill svg{display:block;width:100%;height:auto;border-radius:4px;animation:flip ease-in-out infinite alternate;
+  box-shadow:0 20px 40px rgba(0,0,0,.6)}
+@keyframes fall{from{transform:translate3d(0,-25vh,0) rotate(var(--r0))}to{transform:translate3d(var(--dx),125vh,0) rotate(var(--r1))}}
+@keyframes flip{from{transform:rotateX(0deg) rotateY(-28deg)}to{transform:rotateX(38deg) rotateY(28deg)}}
+.rails::before,.rails::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.rails::before{left:var(--edge)}
+.rails::after{right:var(--edge)}
 
-/* ---------- tipografia ---------- */
-.display{font-family:Unbounded,sans-serif;font-weight:800;letter-spacing:-.03em;line-height:.95;text-transform:uppercase;
-  color:#ff2424;
-  text-shadow:0 0 4px rgba(255,60,60,.6),0 0 16px rgba(255,20,20,.6),0 0 42px rgba(255,0,0,.55),0 0 90px rgba(255,0,0,.35)}
-.glow{animation:neon 3.2s ease-in-out infinite}
-@keyframes neon{
-  0%,100%{text-shadow:0 0 4px rgba(255,60,60,.6),0 0 16px rgba(255,20,20,.6),0 0 42px rgba(255,0,0,.55),0 0 90px rgba(255,0,0,.35)}
-  50%{text-shadow:0 0 5px rgba(255,90,90,.75),0 0 24px rgba(255,30,30,.75),0 0 60px rgba(255,0,0,.7),0 0 120px rgba(255,0,0,.5)}}
-.red{color:var(--red)}
+.wrap{position:relative;z-index:1;margin-inline:var(--edge)}
+.pad{padding-inline:48px}
 
-.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:7px 16px 7px 10px;border-radius:999px;
-  font-family:Unbounded;font-weight:600;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#ffd9d9;
-  background:linear-gradient(180deg,rgba(255,40,40,.14),rgba(255,40,40,.04));
-  border:1px solid rgba(255,70,70,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(255,42,42,.18),0 0 12px var(--red);animation:pulse 2s infinite}
-@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,42,42,0),0 0 12px var(--red)}}
+/* seções com régua horizontal e marcadores "+" */
+.sec{position:relative;z-index:1;border-top:1px solid var(--line)}
+.sec::before,.sec::after{content:"";position:absolute;top:-6px;width:11px;height:11px;z-index:2;
+  background:linear-gradient(var(--plus),var(--plus)) center/1px 100% no-repeat,linear-gradient(var(--plus),var(--plus)) center/100% 1px no-repeat}
+.sec::before{left:calc(var(--edge) - 5px)}
+.sec::after{right:calc(var(--edge) - 5px)}
 
-/* ---------- botões ---------- */
-.btn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:12px;
-  font-family:Unbounded;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;border-radius:999px;cursor:pointer;
-  background:linear-gradient(180deg,#ff4a4a 0%,#e80f0f 50%,#b30000 100%);
-  border:1px solid rgba(255,140,140,.55);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 6px rgba(0,0,0,.25),0 10px 30px -6px rgba(255,20,20,.7),0 0 0 6px rgba(255,30,30,.08);
-  transition:transform .25s ease,box-shadow .25s ease}
-.btn::before{content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);
-  transform:translateX(-120%);animation:shine 3.6s ease-in-out infinite}
-@keyframes shine{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
-.btn:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 6px rgba(0,0,0,.25),0 16px 40px -6px rgba(255,20,20,.9),0 0 0 8px rgba(255,30,30,.12)}
-.btn .arr{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.28);transition:transform .25s}
-.btn:hover .arr{transform:translateX(3px)}
-.btn-sm{padding:10px 20px;font-size:12px}
-.btn-lg{padding:12px 14px 12px 30px;font-size:15px}
-.btn-ghost{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.14);box-shadow:none;color:#f1e6e6}
-.btn-ghost::before{display:none}
-.btn-ghost:hover{border-color:rgba(255,80,80,.6);box-shadow:0 0 30px -8px rgba(255,30,30,.6);background:rgba(255,40,40,.06)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.label b{color:var(--red);font-weight:500}
+.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:1.1}
+.serif em{font-style:italic;color:var(--red)}
+.mute{color:var(--mute)}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:40px;padding:0 18px;border-radius:8px;
+  font-family:var(--sans);font-weight:500;font-size:14px;letter-spacing:-.01em;cursor:pointer;border:0;transition:background .2s,box-shadow .2s,transform .2s}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 0 0 1px rgba(255,120,120,.4) inset,0 8px 24px -8px rgba(255,43,43,.7)}
+.btn-red:hover{background:#ff4646;box-shadow:0 0 0 1px rgba(255,150,150,.5) inset,0 10px 34px -6px rgba(255,43,43,.9)}
+.btn-ghost{background:rgba(255,255,255,.02);color:#fff;border:1px solid var(--line-2);border-radius:12px}
+.btn-ghost:hover{background:rgba(255,43,43,.06);border-color:rgba(255,80,80,.35)}
+.btn kbd{font-family:var(--mono);font-size:10px;opacity:.7;letter-spacing:.04em}
+.link{font-size:14px;color:var(--mute);transition:color .2s}
+.link:hover{color:#fff}
+
+/* textura pontilhada (halftone) */
+.dots{background-image:radial-gradient(rgba(255,90,90,.16) 1px,transparent 1.2px);background-size:5px 5px}
 
 /* ---------- navbar ---------- */
-header{position:sticky;top:0;z-index:50;padding:14px 0}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 10px 0 22px;border-radius:999px;
-  background:rgba(14,2,4,.6);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
-  border:1px solid var(--line);box-shadow:0 10px 40px -10px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
-.logo{display:flex;align-items:center;gap:10px;font-family:Unbounded;font-weight:900;font-size:20px;letter-spacing:-.02em}
-.logo .mark{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
-  background:linear-gradient(145deg,#ff4a4a,#a80000);box-shadow:0 0 20px rgba(255,30,30,.55),inset 0 1px 0 rgba(255,255,255,.4)}
-.logo b{font-weight:900;color:var(--red);margin-left:-10px}
-.nav ul{display:flex;gap:6px;list-style:none}
-.nav ul a{display:block;padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;color:#dccaca;transition:.2s}
-.nav ul a:hover{color:#fff;background:rgba(255,50,50,.1)}
-.burger{display:none;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;font-size:18px}
+header{position:sticky;top:0;z-index:40;background:rgba(10,7,7,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;height:68px;padding-inline:32px;gap:36px}
+.logo{font-family:var(--sans);font-weight:600;font-size:18px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
+.logo i{width:8px;height:8px;border-radius:2px;background:var(--red);box-shadow:0 0 12px var(--red)}
+.nav ul{display:flex;gap:22px;list-style:none}
+.nav ul a{font-size:14px;color:rgba(255,255,255,.72);transition:color .2s}
+.nav ul a:hover{color:#fff}
+.nav .cta{margin-left:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;height:46px;padding:0 22px}
+.nav .cta small{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
+.burger{display:none;margin-left:auto;width:40px;height:40px;border-radius:10px;border:1px solid var(--line-2);background:rgba(255,255,255,.02);color:#fff}
+.burger span{display:block;width:16px;height:1px;background:#fff;margin:4px auto;transition:.25s}
+.burger[aria-expanded="true"] span:first-child{transform:translateY(2.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:last-child{transform:translateY(-2.5px) rotate(-45deg)}
 
 /* ---------- hero ---------- */
-.hero{padding:80px 0 120px;text-align:center}
-.hero .brand{font-size:clamp(40px,10.2vw,150px);margin:28px 0 0}
-.badge{display:inline-flex;align-items:center;gap:12px;margin-top:22px;padding:10px 20px;border-radius:14px;
-  font-family:Unbounded;font-weight:600;font-size:clamp(11px,1.5vw,14px);letter-spacing:.16em;text-transform:uppercase;color:#f3e3e3;
-  background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(90deg,rgba(255,60,60,.1),#ff3b3b,rgba(255,60,60,.1)) border-box;
-  border:1px solid transparent}
-.badge .dot{width:5px;height:5px;border-radius:50%;background:var(--red)}
-.hero h1{font-family:Unbounded;font-weight:700;letter-spacing:-.02em;font-size:clamp(26px,4.2vw,48px);line-height:1.12;margin:44px auto 0;max-width:860px}
-.hero p.sub{max-width:620px;margin:20px auto 0;color:var(--soft);font-size:clamp(16px,1.7vw,18.5px)}
-.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-.hero .note-sm{margin-top:18px;font-size:13px;color:var(--muted)}
+.band{height:64px;border-bottom:1px solid var(--line);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:4px 4px;opacity:.55}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.hero-l{padding:72px 48px 56px}
+.hero-r{position:relative;border-left:1px solid var(--line);overflow:hidden}
+#galaxy{position:absolute;inset:0;width:100%;height:100%}
+.hero-r .label{position:absolute;right:24px;bottom:20px;text-transform:none;letter-spacing:.06em}
+.hero h1{font-size:clamp(46px,5.4vw,68px);line-height:1.12;max-width:520px}
+.hero p.sub{margin-top:18px;max-width:380px;font-size:15px;line-height:1.35;color:rgba(255,255,255,.88)}
+.ask{margin-top:36px;max-width:440px;display:flex;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:12px;
+  background:rgba(255,255,255,.025);border:1px solid var(--line-2);transition:border-color .2s}
+.ask:hover{border-color:rgba(255,80,80,.35)}
+.ask > span:first-child{flex:1;min-width:0;font-size:14px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ask .btn{flex:none}
+.hero .note{margin-top:14px;font-size:12.5px;color:var(--dim)}
 
-/* ---------- seções ---------- */
-section{position:relative;padding:100px 0}
-.sec-head{text-align:center;margin-bottom:60px}
-.sec-head h2{font-size:clamp(34px,5.6vw,68px);margin-top:20px}
-.sec-head p{max-width:620px;margin:18px auto 0;color:var(--soft);font-size:18px}
+.stats{display:grid;grid-template-columns:repeat(3,auto) 1fr;border-top:1px solid var(--line)}
+.stat{padding:26px 48px 28px;border-right:1px solid var(--line)}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:32px;letter-spacing:-.02em;line-height:1}
+.stat span{display:block;margin-top:10px;font-size:12.5px;color:var(--mute);line-height:1.3}
+.tabs{display:flex;align-items:flex-end;justify-content:flex-end;gap:22px;padding:0 40px 26px}
+.tabs a{font-size:13px;color:rgba(255,255,255,.72)}
+.tabs a:hover{color:var(--red)}
 
-.card{position:relative;border-radius:22px;background:linear-gradient(180deg,rgba(30,5,7,.78),rgba(10,2,3,.82));
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
-  background:linear-gradient(160deg,rgba(255,90,90,.55),rgba(255,40,40,.06) 45%,rgba(255,40,40,.25));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+/* ---------- 01 · como funciona ---------- */
+.s-head{padding:110px 48px 44px;text-align:center}
+.s-head h2{font-size:clamp(42px,6vw,76px);margin-top:20px}
+.split{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.split > div{padding:22px 48px 28px}
+.split p{font-size:15px;line-height:1.35;color:rgba(255,255,255,.82);max-width:470px}
 
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.step{padding:34px 30px;transition:transform .3s}
-.step:hover{transform:translateY(-4px)}
-.step .n{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:14px;font-family:Unbounded;font-weight:700;font-size:16px;color:#fff;
-  background:linear-gradient(145deg,rgba(255,60,60,.35),rgba(255,20,20,.08));border:1px solid rgba(255,80,80,.35)}
-.step h3{font-family:Unbounded;font-weight:700;font-size:19px;letter-spacing:-.01em;margin:22px 0 10px}
-.step p{color:#cbb9ba}
+.term{margin:8px 48px 100px;border:1px solid var(--line-2);border-radius:14px;background:var(--card);overflow:hidden}
+.term-top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line-2)}
+.term-body{display:grid;grid-template-columns:1.4fr 1fr}
+.code{padding:34px 28px;font-family:var(--mono);font-size:13.5px;line-height:2;color:rgba(255,255,255,.4);border-right:1px solid var(--line-2);overflow:hidden}
+.code .p{color:var(--red)}
+.code .w{color:#fff}
+.code .c{color:rgba(255,255,255,.3)}
+.code .cursor{display:inline-block;width:8px;height:15px;background:var(--red);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.term-side{padding:34px 28px;display:flex;flex-direction:column;justify-content:center;gap:22px}
+.term-side p{font-size:14px;line-height:1.4;color:rgba(255,255,255,.75)}
+.term-side .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 
-/* produto */
-.product{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.product-copy h3{font-family:Unbounded;font-weight:700;font-size:clamp(24px,2.8vw,34px);line-height:1.15;letter-spacing:-.02em;margin-top:18px}
-.product-copy p{color:var(--soft);margin-top:16px;font-size:17px}
-.product-copy ul{list-style:none;margin:26px 0 34px;display:grid;gap:12px}
-.product-copy li{display:flex;gap:12px;align-items:flex-start;color:#ecdede}
-.product-copy li svg{flex:none;margin-top:3px}
+/* ---------- 02 · materiais ---------- */
+.m-head{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end;padding:100px 48px 48px}
+.m-head h2{font-size:clamp(42px,5.4vw,66px);margin-top:16px}
+.m-head p{font-size:15px;line-height:1.4;color:rgba(255,255,255,.8);max-width:420px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 48px 100px}
+.tile{position:relative;min-height:220px;border-radius:14px;border:1px solid var(--line-2);overflow:hidden;
+  background:linear-gradient(180deg,#141010,#0d0909);padding:22px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .3s,transform .3s}
+.tile::before{content:"";position:absolute;inset:0;opacity:.7;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.2px);background-size:6px 6px;
+  mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.tile::after{content:"";position:absolute;left:50%;bottom:-60%;width:120%;height:100%;transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(255,43,43,.28),transparent);opacity:0;transition:opacity .4s}
+.tile:hover{border-color:rgba(255,80,80,.4);transform:translateY(-3px)}
+.tile:hover::after{opacity:1}
+.tile > *{position:relative;z-index:1}
+.tile .top{display:flex;justify-content:space-between}
+.tile h3{font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:-.02em;line-height:1.05}
+.tile p{margin-top:8px;font-size:13.5px;color:var(--mute);line-height:1.35}
+.tile.cta{background:radial-gradient(120% 90% at 50% 120%,rgba(255,43,43,.35),transparent 60%),#0d0909;border-color:rgba(255,80,80,.3);align-items:center;justify-content:center;text-align:center;gap:18px}
+.bars{display:flex;gap:4px}.bars i{width:30px;height:7px;background:#fff;opacity:.9}.bars i:nth-child(2){width:18px;background:var(--red)}
 
-.panel{padding:12px}
-.panel-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 18px}
-.panel-top .t{font-family:Unbounded;font-weight:700;font-size:14px;letter-spacing:.06em}
-.panel-top .dots{display:flex;gap:6px}.panel-top .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
-.panel-top .dots i:first-child{background:var(--red)}
-.item{display:flex;align-items:center;gap:16px;padding:16px;border-radius:14px;margin-top:6px;
-  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);transition:.25s}
-.item:hover{background:rgba(255,40,40,.08);border-color:rgba(255,70,70,.35);transform:translateX(4px)}
-.item .ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
-  background:linear-gradient(145deg,#ff3d3d,#9e0000);box-shadow:0 6px 18px -4px rgba(255,20,20,.7),inset 0 1px 0 rgba(255,255,255,.35)}
-.item .tx{flex:1;min-width:0}
-.item .tx b{display:block;font-weight:600;font-size:16px}
-.item .tx span{font-size:13px;color:var(--muted)}
-.item .pill{font-family:Unbounded;font-size:10.5px;font-weight:700;letter-spacing:.12em;padding:5px 10px;border-radius:999px;color:#ff6b6b;background:rgba(255,40,40,.12);border:1px solid rgba(255,60,60,.3)}
+/* ---------- 03 · preços ---------- */
+.pr-head{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end;padding:100px 48px 44px}
+.pr-head h2{font-size:clamp(42px,5.4vw,66px);margin-top:16px}
+.pr-head p{font-size:15px;line-height:1.4;color:rgba(255,255,255,.8);max-width:420px}
+.plans{padding:0 48px 100px;display:grid;gap:16px}
+.plan{position:relative;border:1px solid var(--line-2);border-radius:14px;background:linear-gradient(180deg,#120d0d,#0c0808);
+  padding:24px;display:flex;flex-direction:column;gap:18px;transition:border-color .3s,transform .3s}
+.plan:hover{border-color:rgba(255,80,80,.35);transform:translateY(-3px)}
+.plan .top{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:28px}
+.plan h3{font-family:var(--serif);font-weight:400;font-size:28px;letter-spacing:-.02em;line-height:1.05}
+.plan .desc{font-size:13.5px;color:var(--mute);line-height:1.4}
+.price{display:flex;align-items:baseline;gap:6px;font-family:var(--serif);font-size:44px;letter-spacing:-.02em;line-height:1}
+.price small{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dim)}
+.plan .btn{width:100%;margin-top:auto}
+.plan ul{list-style:none;display:grid;gap:9px;padding-top:16px;border-top:1px solid var(--line-2)}
+.plan li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.3}
+.plan li::before{content:"+";font-family:var(--mono);color:var(--red);flex:none}
 
-/* faq */
-.faq{max-width:800px;margin-inline:auto;display:grid;gap:12px}
-details{border-radius:18px;padding:0 26px}
-summary{list-style:none;cursor:pointer;padding:22px 0;font-weight:600;font-size:17px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+/* card principal */
+.plan.hero-plan{display:grid;grid-template-columns:1.1fr 1fr;gap:0;padding:0;overflow:hidden;
+  border-color:rgba(255,80,80,.35);background:radial-gradient(90% 120% at 0% 100%,rgba(255,43,43,.22),transparent 60%),#0f0a0a}
+.hero-plan > div{padding:30px}
+.hero-plan > div + div{border-left:1px solid var(--line)}
+.hero-plan h3{font-size:clamp(32px,3.4vw,44px)}
+.hero-plan .price{font-size:58px}
+.hero-plan ul{border-top:0;padding-top:0;grid-template-columns:1fr 1fr;gap:12px 18px}
+.tag-best{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--red);padding:5px 9px;border-radius:6px}
+
+.grid-plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* selos das marcas */
+.brand-chip{display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:7px;background:#000;border:1px solid rgba(255,255,255,.08)}
+.brand-chip img{height:20px;width:auto;display:block}
+.chip-raven{font-family:var(--sans);font-weight:300;font-size:14px;letter-spacing:.32em;color:#fff}
+.chip-raven b{font-weight:700;color:#39ff6a;letter-spacing:.32em;text-shadow:0 0 10px rgba(57,255,106,.6)}
+.chip-flux{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase}
+.plan.shark:hover{border-color:rgba(30,144,255,.45)}
+.plan.raven:hover{border-color:rgba(57,255,106,.4)}
+
+/* mentoria */
+.plan.mentor{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:32px;padding:28px 30px}
+.plan.mentor .btn{width:auto;margin:0}
+.pr-note{padding:0 48px 60px;margin-top:-70px;font-size:12px;color:var(--dim)}
+
+
+/* ilustrações dos cards */
+.art{position:relative;height:118px;border-radius:10px;border:1px solid var(--line-2);overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.2px) 0 0/6px 6px,linear-gradient(180deg,#140f0f,#0b0808)}
+.art svg{width:100%;height:100%;display:block}
+.art::after{content:"";position:absolute;inset:auto 0 0 0;height:50%;background:linear-gradient(180deg,transparent,rgba(10,7,7,.55));pointer-events:none}
+.art .flow{stroke-dasharray:4 5;animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-18}}
+.hero-plan .art{height:150px;margin-bottom:22px}
+.plan.mentor .art{width:180px;height:110px}
+@media (max-width:760px){.plan.mentor .art{width:100%}}
+@media (prefers-reduced-motion:reduce){.art .flow{animation:none}}
+
+/* aviso de checkout pendente */
+.toast{position:fixed;left:50%;bottom:24px;z-index:60;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  padding:12px 18px;border-radius:10px;background:#160c0c;border:1px solid rgba(255,80,80,.35);font-size:14px;transition:.3s;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- 03 · para quem é ---------- */
+.who{position:relative;overflow:hidden;padding:100px 48px 80px}
+.arcs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9}
+.who-head{position:relative;text-align:right;margin-left:auto;max-width:620px}
+.who-head h2{font-size:clamp(40px,5.2vw,64px);margin-top:16px}
+.rows{position:relative;margin-top:56px;border-top:1px solid var(--line)}
+.rowi{display:grid;grid-template-columns:1fr 220px 40px;gap:28px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.rowi p{font-size:13.5px;color:var(--mute);text-align:right;line-height:1.35}
+.rowi h3{font-size:17px;font-weight:500;letter-spacing:-.02em}
+.rowi .label{text-align:right}
+.who .row-end{position:relative;display:flex;justify-content:flex-end;margin-top:28px}
+
+/* ---------- 04 · o que vem ---------- */
+.feat{padding:90px 48px 90px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 32px;margin-top:28px}
+.grid4 h3{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:-.02em;line-height:1.1}
+.grid4 p{margin-top:10px;font-size:13.5px;color:var(--mute);line-height:1.4}
+.feat .label + .grid4 + .label{display:block;margin-top:64px}
+
+/* ---------- FAQ ---------- */
+.faq{padding:100px 48px}
+.faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.faq h2{font-size:clamp(40px,5vw,60px);margin-top:16px}
+.faq .side p{margin-top:16px;font-size:14px;color:var(--mute);max-width:300px;line-height:1.4}
+.qa{border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:40px 1fr 24px;gap:12px;align-items:center;padding:22px 0;font-size:16px;font-weight:500}
 summary::-webkit-details-marker{display:none}
-summary .pm{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,70,70,.35);color:var(--red);transition:transform .25s}
-details[open] summary .pm{transform:rotate(45deg);background:rgba(255,40,40,.12)}
-details p{padding:0 0 22px;color:#cdbbbc}
+summary .label{color:var(--dim)}
+summary .pm{width:24px;height:24px;position:relative}
+summary .pm::before,summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1px;background:var(--red);transform:translate(-50%,-50%);transition:transform .25s}
+summary .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open] summary .pm::after{transform:translate(-50%,-50%) rotate(0)}
+details p{padding:0 36px 24px 52px;font-size:14.5px;color:var(--mute);line-height:1.45}
 
-/* cta final */
-.final .box{text-align:center;padding:80px 28px;overflow:hidden}
-.final .box::after{content:"";position:absolute;left:50%;bottom:-60%;width:80%;height:100%;transform:translateX(-50%);
-  background:radial-gradient(closest-side,rgba(255,30,30,.45),transparent);pointer-events:none}
-.final h2{font-size:clamp(32px,5.6vw,66px);margin-top:20px}
-.final p{max-width:540px;margin:18px auto 34px;color:var(--soft);font-size:18px}
-.final .btn{position:relative;z-index:1}
+/* ---------- final ---------- */
+.final{position:relative;overflow:hidden;text-align:center;padding:120px 48px 0}
+.final::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 55% at 50% 100%,rgba(255,43,43,.22),transparent 70%)}
+.final h2{position:relative;font-size:clamp(48px,7vw,96px)}
+.final p{position:relative;margin:20px auto 32px;max-width:440px;font-size:15px;color:var(--mute);line-height:1.4}
+.final .row{position:relative;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
+.wordmark{position:relative;margin-top:90px;font-family:var(--serif);font-size:clamp(84px,21vw,300px);line-height:.78;letter-spacing:-.04em;
+  color:transparent;background:radial-gradient(rgba(255,43,43,.95) 1.3px,transparent 1.6px) 0 0/6px 6px;
+  -webkit-background-clip:text;background-clip:text;user-select:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,transparent 100%)}
 
-/* rodapé */
-footer{border-top:1px solid var(--line);background:rgba(5,0,1,.85);padding:56px 0 30px;margin-top:40px}
-.foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.foot .logo{font-size:26px}
-.foot p{color:var(--muted);max-width:400px;margin-top:14px}
-.foot h4{font-family:Unbounded;font-size:11px;letter-spacing:.2em;color:var(--red);margin-bottom:12px}
-.contact{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);transition:.2s}
-.contact:hover{border-color:rgba(255,70,70,.6);background:rgba(255,40,40,.08)}
-.legal{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,60,60,.1);font-size:12.5px;color:#8b7a7b;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* ---------- rodapé ---------- */
+footer{position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(10,7,7,.9)}
+.foot{display:grid;grid-template-columns:1fr auto;gap:28px;padding:40px 48px 26px}
+.foot .logo{font-size:17px}
+.foot p{margin-top:8px;font-size:12.5px;color:var(--mute);max-width:360px;line-height:1.35}
+.foot nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.foot nav a{font-size:12.5px;color:rgba(255,255,255,.7)}
+.foot nav a:hover{color:#fff}
+.ig{display:inline-flex;align-items:center;gap:8px}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 48px 30px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim)}
 
 /* reveal */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-.reveal.in{opacity:1;transform:none}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.hero .rv{opacity:1;transform:none;animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+.hero .rv:nth-child(2){animation-delay:.08s}.hero .rv:nth-child(3){animation-delay:.16s}.hero .rv:nth-child(4){animation-delay:.24s}.hero .rv:nth-child(5){animation-delay:.32s}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
 
 /* ---------- responsivo ---------- */
-@media (max-width:900px){
-  .steps{grid-template-columns:1fr}
-  .product{grid-template-columns:1fr;gap:40px}
+@media (max-width:1000px){
+  .pr-head,.plans,.pr-note{padding-left:28px;padding-right:28px}
+  .grid-plans{grid-template-columns:repeat(2,1fr)}
+  .plan.mentor{grid-template-columns:auto 1fr}
+  .plan.mentor .btn{grid-column:1 / -1;width:100%}
+  .pad,.hero-l,.s-head,.split > div,.m-head,.tiles,.who,.feat,.faq,.final,.foot,.legal{padding-left:28px;padding-right:28px}
+  .term{margin-left:28px;margin-right:28px}
+  .stat{padding:22px 28px}
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .tabs{display:none}
 }
 @media (max-width:760px){
-  header{padding:10px 0}
-  .nav{height:58px;padding:0 8px 0 16px}
-  .nav ul{display:none;position:absolute;top:70px;left:16px;right:16px;flex-direction:column;padding:8px;border-radius:20px;
-    background:#0e0204;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.8);isolation:isolate}
+  .nav{padding-inline:16px;height:60px}
+  .nav ul{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;gap:0;background:#0a0707;border-bottom:1px solid var(--line)}
   .nav ul.open{display:flex}
-  .nav ul a{padding:14px 16px}
-  .nav .btn-sm{display:none}
+  .nav ul a{display:block;padding:16px 20px;border-top:1px solid var(--line);font-size:15px}
+  .nav .cta{display:none}
   .burger{display:block}
-  .hero{padding:32px 0 56px;min-height:calc(100svh - 80px);display:flex;align-items:center}
-  .hero .brand{font-size:12.4vw;margin-top:22px}
-  .badge{letter-spacing:.1em;padding:9px 14px;gap:8px}
-  .hero h1{margin-top:32px;font-size:clamp(24px,7.4vw,32px)}
-  .hero p.sub{font-size:15.5px}
-  .cta-row{margin-top:30px}
-  .sec-head{margin-bottom:40px}
-  .sec-head p,.final p{font-size:16px}
-  .step{padding:26px 22px}
-  .panel{padding:8px}
-  .item{padding:13px;gap:13px}
-  .item .ic{width:40px;height:40px}
-  .final .box{padding:56px 20px}
-  .foot{flex-direction:column}
-  .legal{flex-direction:column}
-  .cta-row .btn{width:100%;max-width:360px}
-  section{padding:72px 0}
-  details{padding:0 18px}
-  .item .pill{display:none}
+  .band{height:36px}
+
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-l{padding:44px 20px 36px}
+  .hero h1{font-size:clamp(42px,12vw,54px)}
+  .hero p.sub{font-size:15px;max-width:none}
+  .ask{max-width:none;flex-direction:column;align-items:stretch;padding:12px 8px 8px;gap:10px}
+  .ask > span:first-child{text-align:center}
+  .ask .btn{height:46px}
+  .hero-r{border-left:0;border-top:1px solid var(--line);height:300px}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat{padding:18px 14px 20px}
+  .stat:last-of-type{border-right:0}
+  .stat b{font-size:26px}
+  .stat span{font-size:11.5px}
+
+  .s-head{padding:76px 20px 32px}
+  .split{grid-template-columns:1fr}
+  .split > div{padding:18px 20px}
+  .split > div + div{padding-top:0}
+  .term{margin:8px 20px 76px}
+  .term-body{grid-template-columns:1fr}
+  .code{border-right:0;border-bottom:1px solid var(--line-2);padding:24px 18px;font-size:12px;line-height:1.9}
+  .term-side{padding:24px 18px}
+  .term-side .row .btn{flex:1}
+
+  .m-head{grid-template-columns:1fr;gap:16px;padding:76px 20px 32px}
+  .tiles{grid-template-columns:1fr;padding:0 20px 76px;gap:12px}
+  .tile{min-height:170px}
+
+  .pr-head{grid-template-columns:1fr;gap:16px;padding:76px 20px 32px}
+  .plans{padding:0 20px 76px;gap:12px}
+  .pr-note{padding:0 20px 48px;margin-top:-56px}
+  .plan.hero-plan{grid-template-columns:1fr}
+  .hero-plan > div{padding:24px 20px}
+  .hero-plan > div + div{border-left:0;border-top:1px solid var(--line)}
+  .hero-plan .price{font-size:50px}
+  .hero-plan ul{grid-template-columns:1fr}
+  .grid-plans{grid-template-columns:1fr;gap:12px}
+  .plan{padding:22px 20px}
+  .plan.mentor{grid-template-columns:1fr;gap:18px;padding:24px 20px}
+  .who{padding:76px 20px 64px}
+  .who-head{text-align:left;margin-left:0}
+  .rows{margin-top:36px}
+  .rowi{grid-template-columns:1fr 30px;gap:6px 14px;padding:18px 0}
+  .rowi h3{grid-column:1;grid-row:1}
+  .rowi p{grid-column:1;grid-row:2;text-align:left}
+  .rowi .label{grid-column:2;grid-row:1}
+  .who .row-end{justify-content:stretch}.who .row-end .btn{width:100%}
+
+  .feat{padding:70px 20px}
+  .grid4{grid-template-columns:1fr;gap:26px}
+
+  .faq{padding:76px 20px}
+  .faq-grid{grid-template-columns:1fr;gap:28px}
+  summary{grid-template-columns:30px 1fr 24px;font-size:15px}
+  details p{padding:0 0 22px 42px}
+
+  .final{padding:84px 20px 0}
+  .final .row .btn{width:100%}
+  .wordmark{margin-top:60px;background-size:3.5px 3.5px}
+
+  .foot{grid-template-columns:1fr;padding:32px 20px 22px}
+  .foot nav{justify-content:flex-start;gap:16px}
+  .legal{padding:16px 20px 26px;flex-direction:column}
 }
 @media (prefers-reduced-motion:reduce){
-  .note,.note svg,.btn::before,.eyebrow i{animation:none}
-  .reveal{opacity:1;transform:none;transition:none}
+  .rv{opacity:1;transform:none;transition:none}
+  .code .cursor{animation:none}
 }
 </style>
 </head>
 <body>
-<div class="bg-fx" aria-hidden="true"></div>
+<div class="rails" aria-hidden="true"></div>
 <div id="money" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
 
 <!-- NAVBAR -->
 <header>
   <div class="wrap">
     <nav class="nav">
-      <a href="#inicio" class="logo" aria-label="FLUXOHUB — início">
-        <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6 4 4 6-8"/><path d="M14 7h6v6"/></svg></span>
-        FLUXO<b>HUB</b>
-      </a>
+      <a href="#inicio" class="logo" aria-label="FLUXOHUB — início"><i></i>FLUXOHUB</a>
       <ul id="menu">
         <li><a href="#inicio">Início</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
         <li><a href="#materiais">Materiais</a></li>
+        <li><a href="#precos">Preços</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <a class="btn btn-sm" href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener">Conhecer</a>
-      <button class="burger" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">☰</button>
+      <a class="btn btn-ghost cta" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">CONHECER<small>pelo Instagram</small></a>
+      <button class="burger" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false"><span></span><span></span></button>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="inicio">
   <!-- HERO -->
-  <section class="hero" id="inicio">
+  <div class="wrap"><div class="band" aria-hidden="true"></div></div>
+  <section class="sec" style="border-top:0">
     <div class="wrap">
-      <span class="eyebrow"><i></i>FLUXOHUB</span>
-      <div class="display glow brand">FLUXOHUB</div>
-      <div class="badge">Materiais de Hot <span class="dot"></span> FLUXOHUB</div>
-      <h1>Comece no digital com <span class="red">mais direção.</span></h1>
-      <p class="sub">Materiais práticos, estratégias e direcionamentos para quem quer sair da teoria e começar a colocar uma operação digital em prática.</p>
-      <div class="cta-row">
-        <a class="btn btn-lg" href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener">Quero conhecer
-          <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-        <a class="btn btn-lg btn-ghost" href="#materiais">Ver materiais</a>
+      <div class="hero">
+        <div class="hero-l">
+          <div class="label rv"><b>●</b>&nbsp; FLUXOHUB</div>
+          <h1 class="serif rv" style="margin-top:22px">Comece no digital com <em>mais direção.</em></h1>
+          <p class="sub rv">Materiais práticos, estratégias e direcionamentos para quem quer sair da teoria e começar a colocar uma operação digital em prática.</p>
+          <a class="ask rv" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">
+            <span>Materiais de Hot • FLUXOHUB</span>
+            <span class="btn btn-red">QUERO CONHECER <kbd>↗</kbd></span>
+          </a>
+          <p class="note rv">Atendimento direto pelo Instagram @_fluxohub.</p>
+        </div>
+        <div class="hero-r" aria-hidden="true">
+          <canvas id="galaxy"></canvas>
+          <span class="label">materiais-de-hot · fluxohub</span>
+        </div>
       </div>
-      <div class="note-sm">Atendimento pelo Instagram @fluxohub.corporation</div>
-    </div>
-  </section>
-
-  <!-- COMO FUNCIONA -->
-  <section id="como-funciona">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow"><i></i>Como funciona</span>
-        <h2 class="display">Da teoria<br>à prática</h2>
-        <p>Um caminho simples para você organizar o que fazer, na ordem certa.</p>
-      </div>
-      <div class="steps">
-        <article class="card step reveal">
-          <div class="n">01</div>
-          <h3>Acesse os materiais</h3>
-          <p>Receba o pacote organizado da FLUXOHUB com criativos, modelos e referências prontos para estudar e adaptar.</p>
-        </article>
-        <article class="card step reveal">
-          <div class="n">02</div>
-          <h3>Siga o direcionamento</h3>
-          <p>Entenda a estrutura da operação: o que montar primeiro, como organizar e onde concentrar sua energia.</p>
-        </article>
-        <article class="card step reveal">
-          <div class="n">03</div>
-          <h3>Coloque em prática</h3>
-          <p>Execute com mais clareza e consistência, ajustando o que for necessário a partir dos seus próprios testes.</p>
-        </article>
+      <div class="stats">
+        <div class="stat"><b>250</b><span>Criativos<br>de referência</span></div>
+        <div class="stat"><b>7</b><span>Materiais<br>no pacote</span></div>
+        <div class="stat"><b>Um</b><span>Caminho<br>organizado</span></div>
+        <div class="tabs"><a href="#materiais">Criativos</a><a href="#materiais">Cursos</a><a href="#materiais">Vídeo aulas</a><a href="#materiais">VSL</a></div>
       </div>
     </div>
   </section>
 
-  <!-- PRODUTO -->
-  <section id="materiais">
+  <!-- 01 · COMO FUNCIONA -->
+  <section class="sec" id="como-funciona">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow"><i></i>Produto FLUXOHUB</span>
-        <h2 class="display glow">Materiais<br>de Hot</h2>
+      <div class="s-head rv">
+        <div class="label">01 · Como funciona</div>
+        <h2 class="serif">Da teoria, e então à prática</h2>
+      </div>
+      <div class="split rv">
+        <div><span class="label">o caminho sem enrolação</span></div>
+        <div><p>Você recebe os materiais organizados, entende a estrutura da operação e coloca em prática na ordem certa. Sem juntar peças soltas pela internet, sem perder tempo decidindo por onde começar.</p></div>
+      </div>
+      <div class="term rv">
+        <div class="term-top"><span class="label">seu passo a passo</span><span class="label">fluxohub</span></div>
+        <div class="term-body">
+          <div class="code" aria-label="Passo a passo">
+            <div><span class="p">$</span> <span class="w">fluxohub</span> <span class="w">--começar</span></div>
+            <div class="c">&nbsp;</div>
+            <div class="c"># 01 · acesse os materiais organizados</div>
+            <div class="c"># 02 · siga o direcionamento, etapa por etapa</div>
+            <div class="c"># 03 · coloque em prática e ajuste pelos seus testes</div>
+            <div class="c">&nbsp;</div>
+            <div><span class="p">→</span> <span class="w">operação em andamento</span> <span class="cursor"></span></div>
+          </div>
+          <div class="term-side">
+            <p>Três etapas, uma ordem clara. Os materiais dão a base; a execução fica com você, no seu ritmo, ajustando a partir dos próprios testes.</p>
+            <div class="row">
+              <a class="btn btn-red" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">Quero conhecer</a>
+              <a class="link" href="#materiais">Ver materiais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · MATERIAIS -->
+  <section class="sec" id="materiais">
+    <div class="wrap">
+      <div class="m-head rv">
+        <div>
+          <div class="label">02 · Produto FLUXOHUB</div>
+          <h2 class="serif">MATERIAIS DE HOT</h2>
+        </div>
         <p>Uma solução da FLUXOHUB para quem quer começar no mercado digital com mais direção, organização e execução.</p>
       </div>
+      <div class="tiles">
+        <article class="tile rv"><div class="top"><span class="label">M.01</span><span class="label"><b>hot</b></span></div><div><h3>250 Criativos</h3><p>Referências organizadas para estudar e adaptar.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.02</span><span class="label"><b>hot</b></span></div><div><h3>Criativos para modelos</h3><p>Peças separadas por perfil para facilitar a escolha.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.03</span><span class="label"><b>hot</b></span></div><div><h3>Curso completo 1</h3><p>O passo a passo para estruturar a sua operação.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.04</span><span class="label"><b>hot</b></span></div><div><h3>Curso 2</h3><p>Conteúdo complementar para aprofundar a execução.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.05</span><span class="label"><b>hot</b></span></div><div><h3>Modelo Hot</h3><p>A estrutura base para montar a sua operação.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.06</span><span class="label"><b>hot</b></span></div><div><h3>Vídeo aulas</h3><p>Aulas em vídeo para aprender no seu ritmo.</p></div></article>
+        <article class="tile rv"><div class="top"><span class="label">M.07</span><span class="label"><b>hot</b></span></div><div><h3>VSL Hot</h3><p>Roteiro para guiar a sua apresentação.</p></div></article>
+        <article class="tile cta rv">
+          <div class="bars" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span class="label">tudo em um só lugar</span>
+          <a class="btn btn-red" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">Quero conhecer</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      <div class="product">
-        <div class="product-copy reveal">
-          <span class="eyebrow"><i></i>O que você encontra</span>
-          <h3>Tudo reunido em um só lugar, pronto para estudar e aplicar.</h3>
-          <p>Em vez de juntar peças soltas pela internet, você recebe uma base organizada para montar a sua operação com método.</p>
-          <ul>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Criativos organizados por categoria para servir de referência.</li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Modelos de estrutura para acelerar a montagem.</li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Roteiro de VSL para guiar a sua apresentação.</li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Direcionamentos práticos sobre por onde começar.</li>
-          </ul>
-          <a class="btn btn-lg" href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener">Quero conhecer
-            <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <!-- 03 · PREÇOS
+       Os links de checkout ficam no objeto CHECKOUT, no <script> do fim da página.
+       Troque cada "(RESERVADO PARA UM CHECKOUT)" pelo link real do checkout. -->
+  <section class="sec" id="precos">
+    <div class="wrap">
+      <div class="pr-head rv">
+        <div>
+          <div class="label">03 · Preços</div>
+          <h2 class="serif">Escolha o seu <em>fluxo</em></h2>
+        </div>
+        <p>Comece pelo pacote completo ou leve só a automação que falta na sua operação.</p>
+      </div>
+
+      <div class="plans">
+        <!-- C1 · MATERIAL + CURSO -->
+        <article class="plan hero-plan rv">
+          <div>
+            <div class="top"><span class="chip-flux">FLUXOHUB</span><span class="tag-best">Mais completo</span></div>
+            <h3 style="margin-top:18px">Materiais de Hot <em class="serif" style="color:var(--red)">+ Curso</em></h3>
+            <p class="desc" style="margin-top:10px">Todos os materiais e os cursos em um só pacote, para estudar e aplicar no seu ritmo.</p>
+            <div class="price" style="margin-top:26px">R$ 32,90</div>
+            <a class="btn btn-red" style="margin-top:22px;width:100%" data-checkout="c1" href="#">QUERO O PACOTE <kbd>↗</kbd></a>
+          </div>
+          <div>
+            <div class="art"><svg viewBox="0 0 400 150" aria-hidden="true">
+<defs><linearGradient id="a1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2b2b"/><stop offset="1" stop-color="#8a0000"/></linearGradient></defs>
+<g transform="translate(116 22)">
+<rect x="30" y="0" width="120" height="86" rx="8" fill="#1a1212" stroke="rgba(255,255,255,.12)" transform="rotate(-8 90 43)"/>
+<rect x="40" y="4" width="120" height="86" rx="8" fill="#1d1414" stroke="rgba(255,255,255,.14)" transform="rotate(5 100 47)"/>
+<path d="M0 22 a8 8 0 0 1 8-8 h48 l12 12 h92 a8 8 0 0 1 8 8 v68 a8 8 0 0 1-8 8 H8 a8 8 0 0 1-8-8z" fill="url(#a1)"/>
+<path d="M0 40 h168 v62 a8 8 0 0 1-8 8 H8 a8 8 0 0 1-8-8z" fill="#ff3d3d" opacity=".9"/>
+<text x="84" y="86" text-anchor="middle" font-family="Instrument Serif,serif" font-size="32" fill="#fff">+7</text>
+</g>
+<circle cx="70" cy="40" r="3" fill="#ff2b2b"/><circle cx="330" cy="110" r="3" fill="#ff2b2b"/><circle cx="345" cy="38" r="2" fill="#fff" opacity=".5"/></svg></div>
+            <div class="label" style="margin-bottom:16px">o que vem no pacote</div>
+            <ul>
+              <li>250 Criativos</li>
+              <li>Criativos para modelos</li>
+              <li>Curso completo 1</li>
+              <li>Curso 2</li>
+              <li>Modelo Hot</li>
+              <li>Vídeo aulas</li>
+              <li>VSL Hot</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="grid-plans">
+          <!-- C2 · FLUXO N8N + TAXA · SHARK BOT -->
+          <article class="plan shark rv">
+            <div class="top"><span class="brand-chip"><img src="assets/sharkbot.png" alt="Shark Bot"></span><span class="label">Fluxo</span></div>
+            <div class="art"><svg viewBox="0 0 300 118" aria-hidden="true">
+<path class="flow" d="M78 59 C110 59 110 32 142 32 M78 59 C110 59 110 86 142 86 M186 32 C210 32 210 59 222 59 M186 86 C210 86 210 59 222 59" fill="none" stroke="#2f8fff" stroke-width="1.6"/>
+<rect x="34" y="37" width="44" height="44" rx="11" fill="#120c0c" stroke="#2f8fff" stroke-opacity=".9"/><path d="M50 52 l12 7-12 7z" fill="#2f8fff"/>
+<rect x="142" y="10" width="44" height="44" rx="11" fill="#120c0c" stroke="#2f8fff" stroke-opacity=".9"/><circle cx="164" cy="32" r="7" fill="none" stroke="#2f8fff" stroke-width="2"/><path d="M164 21v4M164 39v4M153 32h4M171 32h4" stroke="#2f8fff" stroke-width="2"/>
+<rect x="142" y="64" width="44" height="44" rx="11" fill="#120c0c" stroke="#2f8fff" stroke-opacity=".9"/><text x="164" y="91" text-anchor="middle" font-family="Geist Mono,monospace" font-size="14" fill="#2f8fff">R$</text>
+<rect x="222" y="37" width="44" height="44" rx="11" fill="#120c0c" stroke="#2f8fff" stroke-opacity=".9"/><path d="M235 59l6 6 12-12" fill="none" stroke="#2f8fff" stroke-width="2.4" stroke-linecap="round"/>
+<text x="16" y="18" font-family="Geist Mono,monospace" font-size="9" letter-spacing="1.5" fill="rgba(255,255,255,.35)">N8N · WORKFLOW</text></svg></div>
+            <div><h3>Fluxo N8N + Taxa</h3><p class="desc" style="margin-top:8px">Fluxo de automação em n8n com etapa de taxa, para o Shark Bot.</p></div>
+            <div class="price">R$ 25,40</div>
+            <a class="btn btn-red" data-checkout="c2" href="#">Comprar fluxo</a>
+          </article>
+
+          <!-- C3 · PACK DE FLUXOS DE TAXA -->
+          <article class="plan rv">
+            <div class="top"><span class="chip-flux">FLUXOHUB</span><span class="label">Pack</span></div>
+            <div class="art"><svg viewBox="0 0 300 118" aria-hidden="true">
+<g transform="translate(92 16)">
+<rect x="24" y="0" width="100" height="66" rx="9" fill="#1a1212" stroke="rgba(255,255,255,.1)"/>
+<rect x="12" y="10" width="100" height="66" rx="9" fill="#1e1515" stroke="rgba(255,255,255,.14)"/>
+<rect x="0" y="20" width="100" height="66" rx="9" fill="#140d0d" stroke="#ff2b2b"/>
+<path class="flow" d="M26 53 H48 M64 53 H78" stroke="#ff2b2b" stroke-width="1.6"/>
+<circle cx="18" cy="53" r="7" fill="none" stroke="#ff2b2b" stroke-width="2"/><rect x="49" y="46" width="14" height="14" rx="3" fill="none" stroke="#ff2b2b" stroke-width="2"/><circle cx="86" cy="53" r="7" fill="#ff2b2b"/>
+</g>
+<text x="214" y="104" font-family="Instrument Serif,serif" font-size="26" fill="#fff">×N</text></svg></div>
+            <div><h3>Pack de fluxos de taxa</h3><p class="desc" style="margin-top:8px">Um conjunto de fluxos de taxa prontos para usar.</p></div>
+            <div class="price">R$ 16,70</div>
+            <a class="btn btn-red" data-checkout="c3" href="#">Comprar pack</a>
+          </article>
+
+          <!-- C5 · FLUXO REMARKETING · RAVEN BOT -->
+          <article class="plan raven rv">
+            <div class="top"><span class="brand-chip chip-raven"><b>R</b>AVEN</span><span class="label">Fluxo</span></div>
+            <div class="art"><svg viewBox="0 0 300 118" aria-hidden="true">
+<g fill="none" stroke="#39ff6a" stroke-width="2" stroke-linecap="round">
+<path class="flow" d="M150 22 A37 37 0 1 1 113 59"/>
+<path d="M113 59 l-7-9 M113 59 l9-6"/>
+</g>
+<circle cx="150" cy="51" r="9" fill="none" stroke="#39ff6a" stroke-width="2"/><path d="M134 76 c3-10 9-14 16-14 s13 4 16 14" fill="none" stroke="#39ff6a" stroke-width="2"/>
+<g font-family="Geist Mono,monospace" font-size="9" fill="rgba(255,255,255,.4)" letter-spacing="1"><text x="208" y="34">+1h</text><text x="218" y="62">+24h</text><text x="208" y="92">+3d</text></g>
+<circle cx="200" cy="31" r="2.5" fill="#39ff6a"/><circle cx="210" cy="59" r="2.5" fill="#39ff6a"/><circle cx="200" cy="89" r="2.5" fill="#39ff6a"/></svg></div>
+            <div><h3>Fluxo de remarketing</h3><p class="desc" style="margin-top:8px">Fluxo de remarketing para o Raven Bot.</p></div>
+            <div class="price">R$ 9,49</div>
+            <a class="btn btn-red" data-checkout="c5" href="#">Comprar fluxo</a>
+          </article>
+
+          <!-- C6 · FLUXO TAXA · RAVEN BOT -->
+          <article class="plan raven rv">
+            <div class="top"><span class="brand-chip chip-raven"><b>R</b>AVEN</span><span class="label">Fluxo</span></div>
+            <div class="art"><svg viewBox="0 0 300 118" aria-hidden="true">
+<path class="flow" d="M100 59 H186" stroke="#39ff6a" stroke-width="1.6"/>
+<rect x="56" y="37" width="44" height="44" rx="11" fill="#120c0c" stroke="#39ff6a" stroke-opacity=".9"/><path d="M70 55h16v12H70z M74 55v-4h8v4" fill="none" stroke="#39ff6a" stroke-width="2"/>
+<circle cx="214" cy="59" r="27" fill="#0f1a12" stroke="#39ff6a"/>
+<circle cx="214" cy="59" r="20" fill="none" stroke="#39ff6a" stroke-opacity=".4" stroke-dasharray="2 3"/>
+<text x="214" y="64" text-anchor="middle" font-family="Geist Mono,monospace" font-size="14" fill="#39ff6a">R$</text></svg></div>
+            <div><h3>Fluxo de taxa</h3><p class="desc" style="margin-top:8px">Fluxo de taxa para o Raven Bot.</p></div>
+            <div class="price">R$ 6,90</div>
+            <a class="btn btn-red" data-checkout="c6" href="#">Comprar fluxo</a>
+          </article>
         </div>
 
-        <div class="card panel reveal" aria-label="Conteúdo dos Materiais de Hot">
-          <div class="panel-top"><span class="t">MATERIAIS DE HOT</span><span class="dots"><i></i><i></i><i></i></span></div>
-          <div class="item"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="tx"><b>250 Criativos</b><span>Referências prontas para adaptar</span></span><span class="pill">HOT</span></div>
-          <div class="item"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><span class="tx"><b>Criativos para modelos</b><span>Peças organizadas por perfil</span></span><span class="pill">HOT</span></div>
-          <div class="item"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><span class="tx"><b>Estratégias</b><span>Direcionamento passo a passo</span></span><span class="pill">HOT</span></div>
-          <div class="item"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><span class="tx"><b>Modelo</b><span>Estrutura base da operação</span></span><span class="pill">HOT</span></div>
-          <div class="item"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span><span class="tx"><b>VSL</b><span>Roteiro para sua apresentação</span></span><span class="pill">HOT</span></div>
+        <!-- C7 · MENTORIA → contato no Telegram -->
+        <article class="plan mentor rv">
+          <div class="art"><svg viewBox="0 0 180 110" aria-hidden="true">
+<rect x="20" y="18" width="96" height="34" rx="12" fill="#1b1313" stroke="rgba(255,255,255,.14)"/>
+<rect x="32" y="29" width="52" height="4" rx="2" fill="rgba(255,255,255,.4)"/><rect x="32" y="38" width="34" height="4" rx="2" fill="rgba(255,255,255,.25)"/>
+<rect x="64" y="58" width="96" height="34" rx="12" fill="#ff2b2b"/>
+<rect x="76" y="69" width="58" height="4" rx="2" fill="#fff"/><rect x="76" y="78" width="38" height="4" rx="2" fill="rgba(255,255,255,.7)"/></svg></div>
+          <div>
+            <div class="top" style="justify-content:flex-start;gap:14px"><span class="chip-flux">Mentoria</span></div>
+            <h3 style="margin-top:10px">Mentoria individual</h3>
+            <p class="desc" style="margin-top:8px">Acompanhamento direto para tirar dúvidas e organizar a sua operação. Fale comigo no Telegram @dahalish.</p>
+          </div>
+          <div class="price">R$ 99,49</div>
+          <a class="btn btn-ghost" href="https://t.me/dahalish" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.3 13l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.6 2.8c.9-.3 1.6.2 1.3 1.5Z"/></svg>
+            Falar no Telegram</a>
+        </article>
+      </div>
+      <p class="pr-note">Valores em reais. Os materiais e fluxos oferecem estrutura e direção; os resultados dependem da sua execução e não são garantidos.</p>
+    </div>
+  </section>
+
+  <!-- 04 · PARA QUEM É -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="who">
+        <svg class="arcs" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">
+          <g fill="none" stroke="rgba(255,70,70,.12)" stroke-width="1">
+            <path d="M-100 700 C 100 120, 500 40, 900 700"/><path d="M-80 700 C 120 160, 490 80, 860 700"/>
+            <path d="M-60 700 C 140 200, 480 120, 820 700"/><path d="M-40 700 C 160 240, 470 160, 780 700"/>
+            <path d="M-20 700 C 180 280, 460 200, 740 700"/><path d="M0 700 C 200 320, 450 240, 700 700"/>
+            <path d="M20 700 C 220 360, 440 280, 660 700"/><path d="M40 700 C 240 400, 430 320, 620 700"/>
+          </g>
+        </svg>
+        <div class="who-head rv">
+          <div class="label">04 · Para quem é</div>
+          <h2 class="serif">Feito para quem quer sair da teoria</h2>
+        </div>
+        <div class="rows">
+          <div class="rowi rv"><p>Você ainda não montou nada e quer um ponto de partida organizado.</p><h3>Está começando</h3><span class="label">01</span></div>
+          <div class="rowi rv"><p>Já consumiu muito conteúdo, mas falta transformar isso em uma operação.</p><h3>Travou na teoria</h3><span class="label">02</span></div>
+          <div class="rowi rv"><p>Quer referências e estrutura prontas para economizar tempo de montagem.</p><h3>Quer mais direção</h3><span class="label">03</span></div>
+        </div>
+        <div class="row-end rv"><a class="btn btn-ghost" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">Falar com a FLUXOHUB</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · O QUE VEM -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="feat">
+        <div class="label rv">05 · Todo material, organizado</div>
+        <div class="grid4">
+          <div class="rv"><h3>Criativos de referência</h3><p>Uma base ampla de exemplos para estudar formatos e adaptar ao seu projeto.</p></div>
+          <div class="rv"><h3>Estrutura pronta</h3><p>Um modelo de operação para você não começar do zero.</p></div>
+          <div class="rv"><h3>Roteiro de VSL</h3><p>Um guia para organizar a sua apresentação de forma clara.</p></div>
+          <div class="rv"><h3>Direcionamento</h3><p>Orientações práticas sobre a ordem do que fazer primeiro.</p></div>
+        </div>
+        <div class="label rv" style="display:block;margin-top:64px">Sem promessa, com método</div>
+        <div class="grid4">
+          <div class="rv"><h3>Sem enrolação</h3><p>Conteúdo direto, pensado para ser aplicado, não só consumido.</p></div>
+          <div class="rv"><h3>No seu ritmo</h3><p>Você estuda e executa conforme a sua disponibilidade.</p></div>
+          <div class="rv"><h3>Pé no chão</h3><p>Resultados dependem da execução. A FLUXOHUB entrega direção, não garantia.</p></div>
+          <div class="rv"><h3>Atendimento direto</h3><p>Dúvidas resolvidas pelo Instagram @_fluxohub.</p></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section id="faq">
+  <section class="sec" id="faq">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow"><i></i>FAQ</span>
-        <h2 class="display">Dúvidas<br>frequentes</h2>
-      </div>
-      <div class="faq reveal">
-        <details class="card"><summary>O que é a FLUXOHUB?<span class="pm">+</span></summary>
-          <p>A FLUXOHUB reúne materiais, estratégias e direcionamentos para quem quer começar no mercado digital de forma mais organizada.</p></details>
-        <details class="card"><summary>O que são os Materiais de Hot?<span class="pm">+</span></summary>
-          <p>É a oferta da FLUXOHUB com criativos, modelos, roteiro de VSL e direcionamentos práticos para estruturar uma operação digital.</p></details>
-        <details class="card"><summary>Preciso ter experiência?<span class="pm">+</span></summary>
-          <p>Não. O material foi organizado para quem está começando e quer sair da teoria com um caminho mais claro a seguir.</p></details>
-        <details class="card"><summary>Existe garantia de resultado?<span class="pm">+</span></summary>
-          <p>Não. Os materiais oferecem direção e organização, mas os resultados dependem da sua execução, dedicação e de fatores de mercado. Não prometemos vendas nem faturamento.</p></details>
-        <details class="card"><summary>Como faço para conhecer?<span class="pm">+</span></summary>
-          <p>É só chamar a FLUXOHUB no Instagram <a href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener" class="red">@fluxohub.corporation</a>.</p></details>
+      <div class="faq">
+        <div class="faq-grid">
+          <div class="side rv">
+            <div class="label">06 · FAQ</div>
+            <h2 class="serif">Nada fica sem resposta</h2>
+            <p>Ficou alguma dúvida? Chame a FLUXOHUB no Instagram.</p>
+          </div>
+          <div class="qa rv">
+            <details><summary><span class="label">01</span>O que é a FLUXOHUB?<span class="pm"></span></summary>
+              <p>A FLUXOHUB reúne materiais, estratégias e direcionamentos para quem quer começar no mercado digital de forma mais organizada.</p></details>
+            <details><summary><span class="label">02</span>O que são os Materiais de Hot?<span class="pm"></span></summary>
+              <p>É a oferta da FLUXOHUB com criativos, modelos, roteiro de VSL e direcionamentos práticos para estruturar uma operação digital.</p></details>
+            <details><summary><span class="label">03</span>Preciso ter experiência?<span class="pm"></span></summary>
+              <p>Não. O material foi organizado para quem está começando e quer sair da teoria com um caminho mais claro a seguir.</p></details>
+            <details><summary><span class="label">04</span>Existe garantia de resultado?<span class="pm"></span></summary>
+              <p>Não. Os materiais oferecem direção e organização, mas os resultados dependem da sua execução, dedicação e de fatores de mercado. Não prometemos vendas nem faturamento.</p></details>
+            <details><summary><span class="label">05</span>Como faço para conhecer?<span class="pm"></span></summary>
+              <p>É só chamar a FLUXOHUB no Instagram <a href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener" style="color:var(--red)">@_fluxohub</a>.</p></details>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="final">
+  <!-- FINAL -->
+  <section class="sec">
     <div class="wrap">
-      <div class="card box reveal">
-        <span class="eyebrow"><i></i>FLUXOHUB</span>
-        <h2 class="display glow">Saia da teoria</h2>
-        <p>Conheça os Materiais de Hot e comece a organizar a sua operação digital com a FLUXOHUB.</p>
-        <a class="btn btn-lg" href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener">Quero conhecer
-          <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <div class="final">
+        <div class="label rv">FLUXOHUB · Materiais de Hot</div>
+        <h2 class="serif rv" style="margin-top:20px">Nada fica na <em>teoria.</em></h2>
+        <p class="rv">Conheça os Materiais de Hot e comece a organizar a sua operação digital com a FLUXOHUB.</p>
+        <div class="row rv">
+          <a class="btn btn-red" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">QUERO CONHECER <kbd>↗</kbd></a>
+          <a class="link" href="#materiais">Ver materiais</a>
+        </div>
+        <div class="wordmark" aria-hidden="true">FLUXOHUB</div>
       </div>
     </div>
   </section>
@@ -378,23 +726,18 @@ footer{border-top:1px solid var(--line);background:rgba(5,0,1,.85);padding:56px 
   <div class="wrap">
     <div class="foot">
       <div>
-        <a href="#inicio" class="logo">
-          <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6 4 4 6-8"/><path d="M14 7h6v6"/></svg></span>
-          FLUXO<b>HUB</b>
-        </a>
+        <a href="#inicio" class="logo"><i></i>FLUXOHUB</a>
         <p>Materiais, estratégias e direcionamentos para quem quer começar no mercado digital.</p>
       </div>
-      <div>
-        <h4>CONTATO</h4>
-        <a class="contact" href="https://www.instagram.com/fluxohub.corporation/" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3b3b" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#ff3b3b"/></svg>
-          @fluxohub.corporation
-        </a>
-      </div>
+      <nav aria-label="Rodapé">
+        <a href="#inicio">Início</a><a href="#como-funciona">Como funciona</a><a href="#materiais">Materiais</a><a href="#faq">FAQ</a>
+        <a class="ig" href="https://www.instagram.com/_fluxohub/" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>@_fluxohub</a>
+      </nav>
     </div>
     <div class="legal">
       <span>© <span id="ano"></span> FLUXOHUB. Todos os direitos reservados.</span>
-      <span>Conteúdo educacional. Resultados variam conforme a execução de cada pessoa; não há garantia de ganhos.</span>
+      <span>Conteúdo educacional. Resultados variam conforme a execução; não há garantia de ganhos.</span>
     </div>
   </div>
 </footer>
@@ -402,70 +745,155 @@ footer{border-top:1px solid var(--line);background:rgba(5,0,1,.85);padding:56px 
 <script>
 document.getElementById('ano').textContent = new Date().getFullYear();
 
+// ===== LINKS DE CHECKOUT =====
+// Troque cada "(RESERVADO PARA UM CHECKOUT)" pelo link do checkout (ex.: "https://pay.exemplo.com/abc").
+// Enquanto estiver reservado, o botão mostra o aviso "Checkout em breve".
+const CHECKOUT = {
+  c1: "(RESERVADO PARA UM CHECKOUT)", // Materiais de Hot + Curso · R$ 32,90
+  c2: "(RESERVADO PARA UM CHECKOUT)", // Fluxo N8N + Taxa · Shark Bot · R$ 25,40
+  c3: "(RESERVADO PARA UM CHECKOUT)", // Pack de fluxos de taxa · R$ 16,70
+  c5: "(RESERVADO PARA UM CHECKOUT)", // Fluxo de remarketing · Raven Bot · R$ 9,49
+  c6: "(RESERVADO PARA UM CHECKOUT)", // Fluxo de taxa · Raven Bot · R$ 6,90
+};
+(() => {
+  const toast = document.createElement('div');
+  toast.className = 'toast'; toast.setAttribute('role', 'status');
+  document.body.appendChild(toast);
+  let t;
+  document.querySelectorAll('[data-checkout]').forEach(a => {
+    const url = CHECKOUT[a.dataset.checkout] || '';
+    if (/^https?:\/\//.test(url)) {
+      a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    } else {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        toast.textContent = 'Checkout em breve. Enquanto isso, fale com a gente no Instagram @_fluxohub.';
+        toast.classList.add('show'); clearTimeout(t); t = setTimeout(() => toast.classList.remove('show'), 3200);
+      });
+    }
+  });
+})();
+
 // menu mobile
 const burger = document.querySelector('.burger'), menu = document.getElementById('menu');
 burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
-menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
 
 // reveal ao rolar
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-}), { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}), { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('main section:not(:first-of-type) .rv').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
 
-// cédulas de real e dólar caindo ao fundo
+// cédulas de R$100 (ilustração estilizada) caindo ao fundo
 (() => {
   const box = document.getElementById('money');
-  const lines = (c) => Array.from({length: 9}, (_, i) =>
-    `<ellipse cx="160" cy="75" rx="${30 + i * 14}" ry="${14 + i * 6}" fill="none" stroke="${c}" stroke-opacity=".18" stroke-width=".8"/>`).join('');
-  const brl = () => `
-    <svg viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9c3c4"/><stop offset=".55" stop-color="#7a9a9e"/><stop offset="1" stop-color="#4f6f75"/></linearGradient>
-      <radialGradient id="pb" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#e5eeee"/><stop offset="1" stop-color="#7f9da1"/></radialGradient></defs>
-      <rect width="320" height="150" rx="8" fill="url(#gb)"/>
-      ${lines('#173338')}
-      <rect x="8" y="8" width="304" height="134" rx="5" fill="none" stroke="#1d3b40" stroke-opacity=".45" stroke-width="1.5"/>
-      <circle cx="230" cy="75" r="40" fill="url(#pb)" stroke="#2d4c51" stroke-opacity=".5"/>
-      <path d="M212 98c2-18 10-28 18-28s16 10 18 28" fill="#5f7f84" fill-opacity=".6"/><circle cx="230" cy="58" r="12" fill="#5f7f84" fill-opacity=".6"/>
-      <text x="22" y="46" font-family="Unbounded,Arial" font-weight="800" font-size="34" fill="#1b3a40" fill-opacity=".8">100</text>
-      <text x="22" y="132" font-family="Unbounded,Arial" font-weight="800" font-size="16" fill="#1b3a40" fill-opacity=".7">REAIS</text>
-      <text x="290" y="132" text-anchor="end" font-family="Unbounded,Arial" font-weight="800" font-size="22" fill="#1b3a40" fill-opacity=".75">R$</text>
-      <text x="22" y="70" font-family="Inter,Arial" font-weight="600" font-size="8" letter-spacing="1" fill="#1b3a40" fill-opacity=".55">BANCO CENTRAL</text>
-    </svg>`;
-  const usd = () => `
-    <svg viewBox="0 0 320 136" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="gu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8d4b6"/><stop offset=".55" stop-color="#9caf86"/><stop offset="1" stop-color="#6c8058"/></linearGradient>
-      <radialGradient id="pu" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#eef2e4"/><stop offset="1" stop-color="#93a67c"/></radialGradient></defs>
-      <rect width="320" height="136" rx="6" fill="url(#gu)"/>
-      ${lines('#24331a').replace(/cy="75"/g, 'cy="68"')}
-      <rect x="8" y="8" width="304" height="120" rx="4" fill="none" stroke="#2c3d20" stroke-opacity=".5" stroke-width="2"/>
-      <ellipse cx="160" cy="68" rx="38" ry="46" fill="url(#pu)" stroke="#2f4224" stroke-opacity=".5"/>
-      <path d="M140 104c2-18 10-27 20-27s18 9 20 27" fill="#5d7148" fill-opacity=".6"/><circle cx="160" cy="54" r="13" fill="#5d7148" fill-opacity=".6"/>
-      <text x="20" y="40" font-family="Unbounded,Arial" font-weight="800" font-size="28" fill="#22311a" fill-opacity=".8">100</text>
-      <text x="300" y="122" text-anchor="end" font-family="Unbounded,Arial" font-weight="800" font-size="28" fill="#22311a" fill-opacity=".8">100</text>
-      <text x="20" y="122" font-family="Unbounded,Arial" font-weight="800" font-size="24" fill="#22311a" fill-opacity=".75">$</text>
-      <text x="300" y="34" text-anchor="end" font-family="Inter,Arial" font-weight="700" font-size="9" letter-spacing="1.5" fill="#22311a" fill-opacity=".6">ONE HUNDRED</text>
-    </svg>`;
-
-  const mobile = innerWidth < 700;
-  const count = mobile ? 9 : 16;
+  const svg = `
+  <svg viewBox="0 0 470 210" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="nb" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#bfe6f2"/><stop offset=".45" stop-color="#8fd0e6"/><stop offset="1" stop-color="#5fb2d1"/>
+      </linearGradient>
+      <radialGradient id="nw" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e9f7fb"/><stop offset="1" stop-color="#c6e8f2" stop-opacity="0"/></radialGradient>
+      <radialGradient id="nf" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#5d9fc4"/><stop offset="1" stop-color="#245d8c"/></radialGradient>
+      <pattern id="ng" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8 Q4 0 8 8" fill="none" stroke="#2f7fa6" stroke-opacity=".18" stroke-width=".6"/></pattern>
+    </defs>
+    <rect width="470" height="210" fill="url(#nb)"/>
+    <rect width="470" height="210" fill="url(#ng)"/>
+    <!-- área de marca-d'água -->
+    <ellipse cx="300" cy="100" rx="62" ry="80" fill="url(#nw)"/>
+    <!-- corais -->
+    <g fill="none" stroke="#3f8fb8" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round">
+      <path d="M150 210 C150 160 140 130 120 95 M145 160 C165 140 175 120 175 90 M140 130 C130 120 115 110 110 85 M160 125 C180 110 195 100 205 80 M128 100 C140 80 150 70 150 50 M150 210 C160 175 190 160 215 150"/>
+      <path d="M215 40 C230 60 225 80 240 95 M230 60 C245 55 255 45 258 30"/>
+      <path d="M440 210 C430 175 415 160 395 150 M420 175 C430 160 445 150 455 130"/>
+    </g>
+    <!-- garoupa -->
+    <g transform="translate(62 100) scale(.88)">
+      <path d="M0 55 C20 15 90 -5 160 15 C200 25 225 45 235 60 C225 78 200 95 160 102 C90 115 25 100 0 55 Z" fill="url(#nf)"/>
+      <path d="M2 55 L-38 25 L-30 58 L-40 92 Z" fill="#2e6b98"/>
+      <path d="M70 12 C95 -12 140 -10 165 14" fill="#3d7fad" fill-opacity=".85"/>
+      <path d="M95 100 C110 120 135 122 150 104" fill="#3d7fad" fill-opacity=".85"/>
+      <g fill="#a9d6ea" fill-opacity=".55">
+        <circle cx="60" cy="45" r="6"/><circle cx="85" cy="68" r="7"/><circle cx="110" cy="40" r="6"/><circle cx="135" cy="70" r="6"/>
+        <circle cx="160" cy="45" r="5"/><circle cx="40" cy="70" r="5"/><circle cx="185" cy="68" r="4"/><circle cx="120" cy="88" r="4"/>
+      </g>
+      <circle cx="208" cy="50" r="5" fill="#0d2a44"/><circle cx="209.5" cy="48.5" r="1.6" fill="#fff"/>
+      <path d="M225 66 C218 70 210 72 200 71" stroke="#0d2a44" stroke-width="2" fill="none"/>
+    </g>
+    <!-- peixe pequeno e círculo azul -->
+    <path d="M355 120 C370 100 405 98 425 112 C410 128 375 132 355 120 Z M355 120 L340 108 L342 132 Z" fill="#3a83b3" fill-opacity=".75"/>
+    <circle cx="372" cy="170" r="40" fill="#2c75ab" fill-opacity=".55"/>
+    <!-- textos -->
+    <text x="22" y="30" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="15" fill="#0f3d66">BANCO CENTRAL DO BRASIL</text>
+    <text x="20" y="92" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="64" fill="#0f3d66" letter-spacing="-2">100</text>
+    <text x="452" y="40" text-anchor="end" font-family="Arial Black,Arial,Helvetica,sans-serif" font-weight="900" font-size="36" fill="#0f3d66" letter-spacing="-1">100</text>
+    <text x="452" y="196" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="17" fill="#0f3d66">CEM REAIS</text>
+    <text x="270" y="22" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="11" fill="#b3263a" letter-spacing="1">FLUXOHUB</text>
+    <text x="22" y="196" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="11" fill="#0f3d66" letter-spacing="1">FLUXOHUB</text>
+  </svg>`;
+  const mobile = innerWidth < 760;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const count = mobile ? 8 : 14;
   for (let i = 0; i < count; i++) {
-    const depth = Math.random();                       // 0 = longe, 1 = perto
-    const w = (mobile ? 90 : 120) + depth * (mobile ? 70 : 130);
+    const depth = Math.random();                                   // 0 = longe, 1 = perto
     const el = document.createElement('div');
-    el.className = 'note';
-    el.innerHTML = Math.random() < .5 ? brl() : usd();
-    const dur = 26 - depth * 12 + Math.random() * 8;
-    el.style.cssText = `
-      left:${Math.random() * 100 - 8}%;width:${w}px;
-      opacity:${.18 + depth * .32};
-      filter:blur(${(1 - depth) * 2.4}px) brightness(${.55 + depth * .3}) drop-shadow(0 18px 24px rgba(0,0,0,.55));
+    el.className = 'bill';
+    el.innerHTML = svg;
+    const w = (mobile ? 90 : 120) + depth * (mobile ? 70 : 120);
+    const dur = 30 - depth * 14 + Math.random() * 8;
+    el.style.cssText = `left:${Math.random() * 100 - 10}%;width:${w}px;
+      opacity:${.14 + depth * .26};filter:blur(${(1 - depth) * 2.2}px) brightness(${.6 + depth * .25});
       animation-duration:${dur}s;animation-delay:${-Math.random() * dur}s;
-      --r0:${Math.random() * 360}deg;--r1:${Math.random() * 360 + 180}deg;--dx:${(Math.random() - .5) * 300}px;`;
-    if (reduce) el.style.top = Math.random() * 90 + '%';
+      --r0:${Math.random() * 360 | 0}deg;--r1:${(Math.random() * 360 + 200) | 0}deg;--dx:${(Math.random() - .5) * 280 | 0}px`;
+    el.firstElementChild.style.animationDuration = (3 + Math.random() * 3) + 's';
+    if (reduce) { el.style.animation = 'none'; el.style.top = Math.random() * 90 + '%'; el.style.transform = `rotate(${Math.random() * 360 | 0}deg)`; }
     box.appendChild(el);
   }
+})();
+
+// galáxia de partículas vermelhas
+(() => {
+  const c = document.getElementById('galaxy'), ctx = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, dpr, pts = [];
+  const N = innerWidth < 760 ? 2600 : 4200;
+  for (let i = 0; i < N; i++) {
+    // partículas agrupadas em anéis concêntricos, com um pouco de ruído
+    const ring = Math.floor(Math.random() * 14) / 14;
+    const r = Math.min(1, Math.max(0, ring + (Math.random() - .5) * .018 + (Math.random() < .25 ? Math.random() * .07 : 0)));
+    pts.push({ r, a: Math.random() * Math.PI * 2, s: (.0009 + Math.random() * .0012) / (r + .25),
+      z: (Math.random() - .5) * .06 * (1 - r), size: Math.random() < .08 ? 1.6 : .9, b: .35 + Math.random() * .65 });
+  }
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = c.clientWidth; h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize(); addEventListener('resize', resize);
+  const tilt = -.32, sq = .32;                                   // inclinação e achatamento
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+    const cx = w / 2, cy = h / 2, R = Math.min(w * .44, h * 1.05);
+    const ct = Math.cos(tilt), st = Math.sin(tilt);
+    for (const p of pts) {
+      if (!reduce) p.a += p.s;
+      const rr = (p.r * .82 + .18) * R;
+      const x0 = Math.cos(p.a) * rr, y0 = Math.sin(p.a) * rr * sq + p.z * R;
+      const x = cx + x0 * ct - y0 * st, y = cy + x0 * st + y0 * ct;
+      const front = Math.sin(p.a) > 0;                          // metade da frente mais brilhante
+      const alpha = p.b * (front ? 1 : .55) * (1 - p.r * .45);
+      ctx.fillStyle = p.r < .3 ? `rgba(255,215,215,${alpha})` : `rgba(255,${70 + (1 - p.r) * 90 | 0},${70 + (1 - p.r) * 80 | 0},${alpha})`;
+      ctx.fillRect(x, y, p.size, p.size);
+    }
+    // núcleo escuro
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * .2);
+    g.addColorStop(0, 'rgba(10,7,7,1)'); g.addColorStop(.6, 'rgba(10,7,7,.95)'); g.addColorStop(1, 'rgba(10,7,7,0)');
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(tilt); ctx.scale(1, .55);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R * .2, 0, 7); ctx.fill(); ctx.restore();
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
 })();
 </script>
 </body>
